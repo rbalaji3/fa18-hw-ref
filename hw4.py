@@ -13,7 +13,13 @@ most_common_char
 Given an input string s, return the most common character in s.
 """
 def most_common_char(s):
-	pass
+	if s == None:
+		return None
+	maximum = 0
+	for c in s:
+		if s.count(c) > maximum:
+			maximum = s.count(c)
+	return maximum
 
 
 """
@@ -36,8 +42,20 @@ Example 2:
 	Return:
 		None
 """
+
 def alphabet_finder(s):
-	pass
+	if len(s) == 0 or len(s) < 26 or s == None:
+		return None
+	alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+	loweredS = s.lower()
+	last = 0
+	for i in alphabet:
+		try:
+			if loweredS.index(i) > last:
+				last = loweredS.index(i)
+		except:
+			return None
+	return s[0:last + 1]
 
 
 """
@@ -117,9 +135,39 @@ Example:
 		1961
 """
 def alive_people(data):
-	pass
+    import numpy as np
+    data = np.array(data)
+    startYears = data[:,0]
+    ages = data[:,1]
+    endYears = []
+    for i in range(len(startYears)):
+        endYears.append(startYears[i] + ages[i])
+    earliest = min(startYears)
+    latest = max(endYears)
+    possibleYears = {}
+    for i in range(latest - earliest + 1):
+        #print(i + earliest)
+        x = {i + earliest: 0}
+        possibleYears.update(x)
+    for i in range(len(startYears)):
+        start = startYears[i]
+        end = endYears[i]
+        for j in range(start, end):
+            possibleYears[j] += 1
+    maximumKey = earliest
+    for key in possibleYears:
+        if possibleYears[key] > possibleYears[maximumKey]:
+            maximumKey = key
+    return maximumKey
+	
+	
 
-
+#loop through each element of the array
+# when at each element, stop and parse through the rest of the array
+# when parsing through the rest, stop at each element and parse through the rest of the elements 
+# 3 * nested loop 
+# for each one, if the 3 elemens work, put them into an array and save it 
+ 
 """
 three_sum
 
@@ -139,8 +187,23 @@ Example:
 			[-1, -1, 2]
 		]
 """
+
 def three_sum(arr, t):
-	pass
+    arrF = []
+    if arr == None:
+        return None
+    for x in range(len(arr)):
+        first = arr[x]
+        for y in range(x + 1, len(arr)):
+            second = arr[y]
+            for z in range(y + 1, len(arr)):
+                third = arr[z]
+                if first + second + third == t:
+                    arrF.append([first, second, third])
+    for key in arrF:
+        if(set(key) == set(arrF[0])):
+            arrF.pop(arrF.index(key))
+    return arrF
 
 
 """
@@ -193,7 +256,19 @@ Example 2:
 	Return:
 		[1, 2]
 """
+# iterate through all the elements in the array
+# at each one stop, and selectivly parse the rest independently based on index 
 def zero_sum_subarray(arr):
-    pass 
+    arrFinal = []
+    for i in range(len(arr)):
+        outerIndex = arr[i]
+        counter = i + 1
+        for j in range(i + 1, len(arr)):
+            innerIndex = arr[j]
+            #print(arr[i:j])
+            if sum(arr[i:j]) == 0:
+                arrFinal.append([i,j - i])
+    return arrFinal
 
-
+s = "qwertyuiopASDFGHJKLzxcvbnm insensitive paella"
+print(alphabet_finder(s))
