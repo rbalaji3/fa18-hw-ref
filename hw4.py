@@ -16,10 +16,12 @@ def most_common_char(s):
 	if s == None:
 		return None
 	maximum = 0
+    desiredChar = ''
 	for c in s:
 		if s.count(c) > maximum:
 			maximum = s.count(c)
-	return maximum
+            desiredChar = c
+	return desiredChar
 
 
 """
@@ -265,10 +267,6 @@ def zero_sum_subarray(arr):
         counter = i + 1
         for j in range(i + 1, len(arr)):
             innerIndex = arr[j]
-            #print(arr[i:j])
             if sum(arr[i:j]) == 0:
                 arrFinal.append([i,j - i])
     return arrFinal
-
-s = "qwertyuiopASDFGHJKLzxcvbnm insensitive paella"
-print(alphabet_finder(s))
